@@ -26,27 +26,31 @@ const PLACEHOLDER_MODE = false; // Set to true for colored placeholder boxes
 // Your photos
 const ME_IMAGES = [
     'images/me/01ae95d4-6e9c-4e71-9883-1012b16293b4.jpg',
+    'images/me/2026-02-12 13_14_54-97badd64-a13c-4d5f-9609-3e72a32beef5.jpg',
     'images/me/46608987-21cf-49bc-82a6-492edab0eaea.jpg',
     'images/me/62c9ac17-6865-4815-8c3d-aa4a1f1583eb.jpg',
     'images/me/7d97e7ad-d9b3-4d19-8a91-d3080835b4da.jpg',
     'images/me/81a082de-f98e-4b84-9074-d6800059f5a2.jpg',
-    'images/me/97badd64-a13c-4d5f-9609-3e72a32beef5.jpg',
     'images/me/9f8fbd09-b46c-41a7-9827-ce2799726179.jpg',
     'images/me/caf9b8f0-b549-4428-960c-3ff22429d753.jpg',
-    'images/me/cafa55a3-a9b6-40df-b72a-690ab6c2c6d6.jpg',
     'images/me/dde5ccd9-a2f7-4f33-bf77-b333b72795d1.jpg',
-    'images/me/ed86276c-d85f-4c07-9e6c-54728f204f7c.jpg'
+    'images/me/ed86276c-d85f-4c07-9e6c-54728f204f7c.jpg',
+    'images/me/Screenshot 2026-02-12 131714.jpg',
+    'images/me/Screenshot 2026-02-12 131802.jpg',
+    'images/me/Screenshot 2026-02-12 131839.jpg'
 ];
 
 // Decoy images - other people, random objects, etc.
-// TODO: Add decoy images to images/decoys/ folder
 const DECOY_IMAGES = [
-    'images/decoys/01.jpg',
-    'images/decoys/02.jpg',
-    'images/decoys/03.jpg',
-    'images/decoys/04.jpg',
-    'images/decoys/05.jpg',
-    'images/decoys/06.jpg'
+    'images/decoys/Brad_Pitt-69858.jpg',
+    'images/decoys/Screenshot 2026-02-11 132236.png',
+    'images/decoys/Screenshot 2026-02-12 132035.jpg',
+    'images/decoys/Screenshot 2026-02-12 132137.jpg',
+    'images/decoys/Screenshot 2026-02-12 132152.jpg',
+    'images/decoys/Screenshot 2026-02-12 132214.jpg',
+    'images/decoys/Screenshot 2026-02-12 132317.jpg',
+    'images/decoys/Screenshot 2026-02-12 132348.jpg',
+    'images/decoys/timeflies-cal-the-identity-crisis-most-personal-work-yet-vertical.jpg'
 ];
 
 // Emoji images for floating animation on Valentine page
