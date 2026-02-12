@@ -142,6 +142,7 @@ function showCaptchaScreen() {
 function showValentineScreen() {
     showScreen(screenValentine);
     startEmojiAnimation();
+    startTimeSinceCounter();
     playSound('valentine'); // Start background music
 }
 
@@ -403,6 +404,33 @@ function stopSound(soundName) {
         sound.pause();
         sound.currentTime = 0;
     }
+}
+
+// ==================== TIME SINCE COUNTER ====================
+function updateTimeSince() {
+    const startDate = new Date('2015-11-23T08:00:00');
+    const now = new Date();
+    const diff = now - startDate;
+
+    // Calculate years, months, days, hours, minutes, seconds
+    const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+    const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365.25)) / (1000 * 60 * 60 * 24 * 30.44));
+    const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30.44)) / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const timeString = `${years} years, ${months} months, ${days} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds`;
+
+    const element = document.getElementById('time-since');
+    if (element) {
+        element.textContent = timeString;
+    }
+}
+
+function startTimeSinceCounter() {
+    updateTimeSince();
+    setInterval(updateTimeSince, 1000);
 }
 
 // ==================== UTILITIES ====================

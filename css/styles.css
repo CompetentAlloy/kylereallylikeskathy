@@ -472,10 +472,27 @@ body {
     margin-bottom: 0;
 }
 
-.message-placeholder {
-    color: #7f8c8d !important;
+.message-greeting {
+    font-size: 20px !important;
+    font-weight: 600;
+    color: #c0392b !important;
+}
+
+.time-counter {
+    font-weight: 600;
+    color: #2980b9;
+}
+
+.message-closing {
+    margin-top: 24px !important;
     font-style: italic;
-    font-size: 15px !important;
+}
+
+.message-signature {
+    font-size: 20px !important;
+    font-weight: 600;
+    color: #c0392b !important;
+    margin-top: 8px !important;
 }
 
 .valentine-footer {
