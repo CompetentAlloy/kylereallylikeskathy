@@ -1,0 +1,656 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    height: -webkit-fill-available;
+    width: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* iOS safe area support */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Screen management */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    -webkit-transition: opacity 0.4s ease;
+}
+
+.screen.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* ==================== */
+/* SCREEN 1: LANDING    */
+/* ==================== */
+#screen-landing {
+    background: #f5f5f5;
+}
+
+.landing-container {
+    text-align: center;
+    padding: 40px;
+    max-width: 360px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lock-icon {
+    color: #5f6368;
+    margin-bottom: 20px;
+}
+
+.lock-icon svg {
+    width: 48px;
+    height: 48px;
+}
+
+#screen-landing h1 {
+    color: #202124;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+#screen-landing p {
+    color: #5f6368;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+.btn-primary {
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    padding: 12px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    -webkit-transition: background 0.2s ease, box-shadow 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.btn-primary:hover {
+    background: #1557b0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.btn-primary:active {
+    background: #174ea6;
+}
+
+/* ==================== */
+/* SCREEN 2: CAPTCHA    */
+/* ==================== */
+#screen-captcha {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.captcha-container {
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    width: 300px;
+    max-width: 95vw;
+}
+
+.captcha-header {
+    background: #fff;
+    color: #202124;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.captcha-prompt {
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.captcha-prompt strong {
+    font-weight: 700;
+}
+
+.captcha-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    padding: 2px;
+    background: #fff;
+}
+
+.captcha-cell {
+    position: relative;
+    aspect-ratio: 1;
+    background: #f0f0f0;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Fallback for browsers without aspect-ratio support */
+@supports not (aspect-ratio: 1) {
+    .captcha-cell {
+        padding-bottom: 100%;
+        height: 0;
+    }
+    .captcha-cell > * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.captcha-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.15s ease;
+    -webkit-transition: transform 0.15s ease;
+}
+
+.captcha-cell:active img {
+    transform: scale(0.95);
+    -webkit-transform: scale(0.95);
+}
+
+/* Placeholder styling for development */
+.captcha-cell .placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 10px;
+    color: #fff;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.captcha-cell .placeholder.me {
+    background: linear-gradient(135deg, #4a8cca 0%, #3a7bc8 100%);
+}
+
+.captcha-cell .placeholder.decoy {
+    background: linear-gradient(135deg, #7ab547 0%, #5a9a32 100%);
+}
+
+/* Selection overlay - checkmark style like real captcha */
+.captcha-cell .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    -webkit-transition: opacity 0.15s ease;
+    pointer-events: none;
+}
+
+.captcha-cell.selected .overlay {
+    opacity: 1;
+}
+
+.captcha-cell.selected .overlay {
+    background: transparent;
+}
+
+.captcha-cell.selected.correct .check-circle,
+.captcha-cell.selected.wrong .check-circle {
+    display: flex;
+}
+
+.check-circle {
+    display: none;
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #4285f4;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.captcha-cell.selected.wrong .check-circle {
+    background: #ea4335;
+}
+
+.check-circle svg {
+    width: 16px;
+    height: 16px;
+    fill: #fff;
+}
+
+.overlay-icon {
+    display: none;
+}
+
+/* Border highlight on selection */
+.captcha-cell.selected {
+    box-shadow: inset 0 0 0 3px #4285f4;
+}
+
+.captcha-cell.selected.wrong {
+    box-shadow: inset 0 0 0 3px #ea4335;
+}
+
+/* Captcha footer - matches Google style */
+.captcha-footer {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #e0e0e0;
+    background: #f9f9f9;
+}
+
+.captcha-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #70757a;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+    -webkit-transition: color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.icon-btn:hover {
+    color: #202124;
+}
+
+.icon-btn:active {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.btn-verify {
+    background: #4285f4;
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    -webkit-transition: background 0.2s ease, box-shadow 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.btn-verify:hover {
+    background: #3b78e7;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.btn-verify:active {
+    background: #3367d6;
+}
+
+/* ==================== */
+/* SCREEN 3: VALENTINE  */
+/* ==================== */
+#screen-valentine {
+    background: url('../images/background.jpg') 70% center / cover no-repeat;
+    background-color: #2c3e50;
+    overflow: hidden;
+}
+
+.valentine-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 5%;
+}
+
+.hearts-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.floating-emoji {
+    position: absolute;
+    bottom: -100px;
+    opacity: 0;
+    animation: float-up 6s ease-out forwards;
+    -webkit-animation: float-up 6s ease-out forwards;
+    object-fit: contain;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.9;
+    }
+    85% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(var(--travel-distance, -110vh)) rotate(15deg) scale(1);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes float-up {
+    0% {
+        -webkit-transform: translateY(0) rotate(0deg) scale(0.8);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.9;
+    }
+    85% {
+        opacity: 0.9;
+    }
+    100% {
+        -webkit-transform: translateY(var(--travel-distance, -110vh)) rotate(15deg) scale(1);
+        opacity: 0;
+    }
+}
+
+.valentine-content {
+    position: relative;
+    z-index: 10;
+    text-align: left;
+    padding: 40px 24px;
+    max-width: 420px;
+    animation: fade-in 0.8s ease-out;
+    -webkit-animation: fade-in 0.8s ease-out;
+}
+
+@keyframes fade-in {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fade-in {
+    0% {
+        -webkit-transform: translateY(20px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.valentine-title {
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 24px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.valentine-message {
+    background: rgba(255, 255, 255, 0.92);
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    margin-bottom: 24px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.valentine-message p {
+    font-size: 17px;
+    color: #2c3e50;
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+.valentine-message p:last-child {
+    margin-bottom: 0;
+}
+
+.message-placeholder {
+    color: #7f8c8d !important;
+    font-style: italic;
+    font-size: 15px !important;
+}
+
+.valentine-footer {
+    color: #fff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    font-weight: 500;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.heart-emoji {
+    font-size: 20px;
+}
+
+/* Floating media container for future GIFs */
+.floating-media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* ==================== */
+/* FAILURE POPUP        */
+/* ==================== */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    -webkit-transition: opacity 0.3s ease;
+}
+
+.popup.active {
+    display: flex;
+    opacity: 1;
+}
+
+.popup-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    max-width: 320px;
+    margin: 20px;
+    animation: shake 0.5s ease;
+    -webkit-animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-10px); }
+    40% { transform: translateX(10px); }
+    60% { transform: translateX(-10px); }
+    80% { transform: translateX(10px); }
+}
+
+@-webkit-keyframes shake {
+    0%, 100% { -webkit-transform: translateX(0); }
+    20% { -webkit-transform: translateX(-10px); }
+    40% { -webkit-transform: translateX(10px); }
+    60% { -webkit-transform: translateX(-10px); }
+    80% { -webkit-transform: translateX(10px); }
+}
+
+.popup-image {
+    margin-bottom: 16px;
+}
+
+.popup-image img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+.popup-content h2 {
+    color: #e74c3c;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.popup-content p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.btn-retry {
+    margin-top: 20px;
+    background: #1a73e8;
+    color: #fff;
+    border: none;
+    padding: 12px 32px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    -webkit-transition: background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.btn-retry:hover {
+    background: #1557b0;
+}
+
+.btn-retry:active {
+    background: #174ea6;
+}
+
+/* ==================== */
+/* RESPONSIVE           */
+/* ==================== */
+@media (max-width: 360px) {
+    .captcha-container {
+        width: 290px;
+    }
+
+    .valentine-title {
+        font-size: 28px;
+    }
+
+    .valentine-message p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .valentine-container {
+        justify-content: center;
+        padding-left: 0;
+        padding: 20px;
+    }
+
+    .valentine-content {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .valentine-footer {
+        justify-content: center;
+    }
+
+    #screen-valentine {
+        background-image: url('../images/background-mobile.jpg');
+        background-position: center top;
+        background-size: cover;
+    }
+}
+
+@media (min-width: 768px) {
+    .valentine-title {
+        font-size: 42px;
+    }
+
+    .valentine-message {
+        padding: 32px;
+    }
+
+    .valentine-message p {
+        font-size: 18px;
+    }
+}

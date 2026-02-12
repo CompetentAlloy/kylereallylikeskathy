@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Verification Required</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Screen 1: Landing -->
+    <div id="screen-landing" class="screen active">
+        <div class="landing-container">
+            <div class="lock-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
+                    <path d="M12 1C8.676 1 6 3.676 6 7v2H4v14h16V9h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v2H8V7c0-2.276 1.724-4 4-4zm0 10c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/>
+                </svg>
+            </div>
+            <h1>Security Check</h1>
+            <p>Please verify you're human to continue</p>
+            <button id="btn-start" class="btn-primary">Continue</button>
+        </div>
+    </div>
+
+    <!-- Screen 2: Captcha -->
+    <div id="screen-captcha" class="screen">
+        <div class="captcha-container">
+            <div class="captcha-header">
+                <span class="captcha-prompt">Select all images with <strong>your valentine</strong>.</span>
+            </div>
+            <div class="captcha-grid" id="captcha-grid">
+                <!-- 16 image cells (4x4) will be populated by JS -->
+            </div>
+            <div class="captcha-footer">
+                <div class="captcha-icons">
+                    <button class="icon-btn" id="btn-refresh" title="Get new images">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" title="Audio challenge">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                        </svg>
+                    </button>
+                    <button class="icon-btn" title="Help">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path fill="currentColor" d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/>
+                        </svg>
+                    </button>
+                </div>
+                <button id="btn-verify" class="btn-verify">VERIFY</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: Valentine Message -->
+    <div id="screen-valentine" class="screen">
+        <div class="valentine-container">
+            <div class="hearts-bg" id="hearts-bg"></div>
+            <div class="valentine-content">
+                <h1 class="valentine-title">Happy Valentine's Day!</h1>
+                <div class="valentine-message">
+                    <p>Congratulations, you found your valentine!</p>
+                    <p class="message-placeholder">[Your custom message goes here - edit this section!]</p>
+                </div>
+                <div class="valentine-footer">
+                    <span class="heart-emoji">&#10084;</span>
+                    <span>With all my love</span>
+                    <span class="heart-emoji">&#10084;</span>
+                </div>
+            </div>
+            <!-- Container for floating images/gifs (future enhancement) -->
+            <div class="floating-media" id="floating-media"></div>
+        </div>
+    </div>
+
+    <!-- Failure Popup -->
+    <div id="failure-popup" class="popup">
+        <div class="popup-content">
+            <div class="popup-image">
+                <img src="images/emojis/29066.png" alt="">
+            </div>
+            <h2>How could you?!</h2>
+            <p>You don't recognize your own valentine?!</p>
+            <button id="btn-retry" class="btn-retry">Try Again</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
